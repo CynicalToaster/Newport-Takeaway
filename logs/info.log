@@ -1,0 +1,20 @@
+25-03-2018 03:31:35 INFO Array
+(
+    [user_id] => 27
+)
+ 
+25-03-2018 05:47:12 INFO Logout 
+25-03-2018 06:43:51 INFO REPLACE INTO
+                    users (type,hash,username,firstname,lastname,dob)
+                VALUES
+                    ("customer","$2y$10$B.9eVk7u4LiDJg6E/43EPuENCbgjLoUXMdKCRX/NJn12xK0xmZi/K","James123","James","Test","23190273")
+             
+25-03-2018 07:11:19 INFO Logout 
+26-03-2018 08:50:15 INFO Logout 
+26-03-2018 11:56:47 INFO REPLACE INTO
+                    users (type,hash,username,firstname,lastname,dob)
+                VALUES
+                    ("customer","$2y$10$T3OrQ.muKoiiVwII6xH1oOi5ooQQPxSxoQRPhsE3pjuBS.j04UJY6","DanEvans","Daniel","Evans","9/4/1998")
+             
+26-03-2018 11:57:05 INFO Logout 
+26-03-2018 11:57:29 INFO Logout 

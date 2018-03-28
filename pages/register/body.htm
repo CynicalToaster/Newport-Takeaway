@@ -1,0 +1,48 @@
+<? if (!isset($this->user)): ?>
+    <div id="" class="container">
+        <div class="row">
+            <div class="login-container-flex">
+                <div class="login-container">
+                    <h1>Register</h1>
+                    <form id="register_form" method="post">
+                        <div class="form-field">
+                            <input name="username" type="text" placeholder="Username">
+                        </div>
+                        <div class="form-field">
+                            <input name="password" type="password" placeholder="Password">
+                        </div>
+                        <div class="form-field">
+                            <input name="firstname" type="text" placeholder="Forename">
+                        </div>
+                        <div class="form-field">
+                            <input name="lastname" type="text" placeholder="Surname">
+                        </div>
+                        <div class="form-field">
+                            <input name="dob" type="text" placeholder="Date of Birth">
+                        </div>
+                        <button class="btn primary" onClick="createAccount(); return false;">Create Account</button>
+                    </form>
+                    <div class="login-register">Already have an account? <a class="signup" href="/login">Login</a></div>
+                </div>
+            </div>
+            <span class="signiture">Dan Evans</span>
+        </div>
+    </div>
+<? else: ?>
+    <button onClick="logout(); return false;">Logout</button>
+<? endif; ?>
+
+<script>
+    function createAccount() {
+        send_ajax(
+            $('#register_form')[0], 
+            'create_account', 
+            {
+                'onSuccess': function(response) {
+                    alert(response);
+                    window.location.href = '/login';
+                }
+            }
+        ); 
+    }
+</script>

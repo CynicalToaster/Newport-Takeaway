@@ -1,0 +1,37 @@
+<? if (isset($this->user)): ?>
+    <div id="" class="container">
+        <div class="row">
+            <div class="page-container-flex">
+                <div class="page-container">
+                    <h1>Sign In</h1>
+                    <form id="login_form" method="post">
+                        <div class="form-field">
+                            <input name="username" type="text" placeholder="Username">
+                        </div>
+                        <div class="form-field">
+                            <input name="password" type="password" placeholder="Password">
+                        </div>
+                        <button class="btn primary" onClick="login(); return false;">Login</button>
+                    </form>
+                </div>
+            </div>
+            <span class="signiture">Dan Evans</span>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            send_ajax(
+                '', 
+                'logout', 
+                {
+                    'onSuccess': function(response) {
+                        window.location.href = '/login';
+                    }
+                }
+            ); 
+        }
+    </script>
+<? else: ?>
+    <a href="/login">Login</a>
+<? endif; ?>

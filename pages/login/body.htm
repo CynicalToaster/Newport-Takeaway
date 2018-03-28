@@ -1,0 +1,50 @@
+<? if (!isset($this->user)): ?>
+    <div id="" class="container">
+        <div class="row">
+            <div class="login-container-flex">
+                <div class="login-container">
+                    <h1>Sign In</h1>
+                    <form id="login_form" method="post">
+                        <div class="form-field">
+                            <input name="username" type="text" placeholder="Username">
+                        </div>
+                        <div class="form-field">
+                            <input name="password" type="password" placeholder="Password">
+                        </div>
+                        <button class="btn primary" onClick="login(); return false;">Login</button>
+                    </form>
+                    <div class="login-register">Don't have an account? <a class="signup" href="/register">Sign Up</a></div>
+                </div>
+            </div>
+            <span class="signiture">Dan Evans</span>
+        </div>
+    </div>
+<? else: ?>
+    <button onClick="logout(); return false;">Logout</button>
+<? endif; ?>
+
+<script>
+    function login() {
+        send_ajax(
+            $('#login_form')[0], 
+            'login', 
+            {
+                'onSuccess': function(response) {
+                    window.location.href = '/';
+                }
+            }
+        ); 
+    }
+
+    function logout() {
+        send_ajax(
+            '', 
+            'logout', 
+            {
+                'onSuccess': function(response) {
+                    window.location.href = '/login';
+                }
+            }
+        ); 
+    }
+</script>

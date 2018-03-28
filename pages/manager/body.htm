@@ -1,0 +1,13 @@
+<? if (isset($this->user) && $this->user->type == 'admin'): ?>
+
+    <p>Logged in as: <?= $this->user->username ?> - <?= $this->user->type?></p>
+    
+
+    <a href="/manager/add-item">Add Item</a><br>
+    <a href="/manager/edit-item">Edit Item</a><br>
+    <a href="/manager/remove-item">Remove Item</a>
+
+
+<? else: ?>
+    <a href="/login">Login</a>
+<? endif; ?>
