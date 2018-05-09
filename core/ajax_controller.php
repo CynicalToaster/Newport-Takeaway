@@ -34,7 +34,7 @@
             return false;
         }
 
-        public function processUrl($url = '/')
+        public function processUrl($url = '/', $query = array())
         {
             $event = $_SERVER['HTTP_EVENT'];
             $callback_name = 'ajax_'. $event;

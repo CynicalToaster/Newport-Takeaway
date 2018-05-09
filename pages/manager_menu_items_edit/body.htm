@@ -1,0 +1,54 @@
+<?
+    if (isset($this->query['id']))
+        $menu_item = (new Db_Item())->findById($this->query['id']);
+    else
+        $menu_item = new Db_Item();
+?>
+
+<div class="container">
+    <div class="row">
+        
+        <? if(isset($this->user)): ?>
+            <a class="user" href="/login"><?= $this->user->type == 'admin' ? 'Admin' : 'User' ?>: <?= $this->user->username ?></a>
+        <? else: ?>
+            <a class="user" href="/login">Login</a>
+        <? endif; ?> 
+
+        <div class="floating-container-flex">
+            <div class="floating-container">
+                <a class="btn-back" href="/manager/menu"><i class="fas fa-chevron-left"></i></a>
+                <h1>Edit - <?= $menu_item->name ?></h1>
+
+                <div id="form-message"></div>
+
+                <form id="item-edit-form" class="mb-20">
+                    <? $menu_item->renderForm(); ?>
+                </form>
+
+                <button class="btn primary mb-20" onClick="item_save(); return false;">Save</button>
+                <button class="btn primary" onClick="item_delete(); return false;">Delete</button>
+
+                <div class="login-register">Don't have an account? <a class="signup" href="/register">Sign Up</a></div>
+            </div>
+        </div>
+        <span class="signiture">Dan Evans</span>
+    </div>
+</div>
+
+<script>
+    function item_save() {
+        send_ajax(
+            $('#item-edit-form')[0], 
+            'save_item', 
+            {'update': $('#form-message')}
+        ); 
+    }
+
+    function item_delete() {
+        send_ajax(
+            $('#item-edit-form')[0], 
+            'delete_item', 
+            {'update': $('#form-message')}
+        ); 
+    }
+</script>

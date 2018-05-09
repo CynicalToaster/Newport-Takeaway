@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        
+        <? if(isset($this->user)): ?>
+            <a class="user" href="/login"><?= $this->user->type == 'admin' ? 'Admin' : 'User' ?>: <?= $this->user->username ?></a>
+        <? else: ?>
+            <a class="user" href="/login">Login</a>
+        <? endif; ?> 
+
+        <div class="floating-container-flex">
+            <div class="floating-container">
+                <a class="btn-back" href="/manager"><i class="fas fa-chevron-left"></i></a>
+                <h1>Menu - Manager</h1>
+
+                <? $categories = (new Db_Category())->findAll(); ?>
+                <ul class="menu-category-list">
+                    <? foreach ($categories as $category): ?>
+                        <? if (sizeof($category->items) > 0): ?>
+                            <li class="menu-category">
+                                <p class="title"><strong><?= $category->name ?></strong></p>
+                                <ul class="category-item-list">
+                                    <? foreach ($category->items as $item): ?>
+                                        <li class="category-item">
+                                            <span class="title"><strong><?= $item->name ?></strong></span>
+                                            <a class="category-item-edit" href="/manager/menu/items/edit?id=<?= $item->id ?>">Edit</a>
+                                            <span class="price">&pound;<?= $item->price ?></span><br>
+                                            <span class="description"><?= $item->description ?></span>
+                                        </li>
+                                    <? endforeach; ?>
+                                </ul>
+                            </li>
+                        <? endif; ?>
+                    <? endforeach; ?>
+                </ul>
+
+                <a class="btn primary" href="/manager/menu/items/edit">Add New Item</a>
+            </div>
+        </div>
+        <span class="signiture">Dan Evans</span>
+    </div>
+</div>

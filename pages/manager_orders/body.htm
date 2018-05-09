@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+        
+        <? if(isset($this->user)): ?>
+            <a class="user" href="/login"><?= $this->user->type == 'admin' ? 'Admin' : 'User' ?>: <?= $this->user->username ?></a>
+        <? else: ?>
+            <a class="user" href="/login">Login</a>
+        <? endif; ?> 
+
+        <div class="floating-container-flex">
+            <div class="floating-container">
+                <a class="btn-back" href="/manager"><i class="fas fa-chevron-left"></i></a>
+                <h1>Orders</h1>
+
+                <div id="form-message"></div>
+
+                <div>
+                    <? $orders = (new Db_Order)->findAll() ?>
+                    <? foreach ($orders as $order): ?>
+                        
+                        <div class="order">
+                            <p class="order-header">
+                                <strong>Order #<?= $order->id ?></strong> 
+                                <a class="order-delete" href="#" onclick="deleteOrder(<?= $order->id ?>);"><i class="fas fa-times"></i></a>
+                            </p>
+                            <ul class="order-items">
+                                <? foreach ($order->items as $order_item): ?>
+                                    <li>#<?= $order_item->count ?> <?= $order_item->item->name ?></li>
+                                <? endforeach; ?>
+                            </ul>
+                        </div>
+
+                    <? endforeach; ?>
+
+                    <? if (sizeof($orders) == 0): ?>
+                        <span>No orders has been created.</span>
+                    <? endif; ?>
+                </div>
+            </div>
+        </div>
+        <span class="signiture">Dan Evans</span>
+    </div>
+</div>
+
+<!-- <p>Logged in as: <?= $this->user->username ?> - <?= $this->user->type?></p> -->
+
+<script>
+    function deleteOrder(id)
+    {
+        send_ajax(
+            null, 
+            'delete_order', 
+            {
+                'update': $('#form-message'),
+                'extraData': {
+                    'id': id
+                },
+            }
+        );
+
+        event.preventDefault();
+    }
+</script>

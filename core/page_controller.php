@@ -37,10 +37,11 @@
             return false;
         }
 
-        public function processUrl($url = '/')
+        public function processUrl($url = '/', $query = array())
         {
             if (isset($this->pages[$url]))
             {
+                $this->pages[$url]->query = $query;
                 $this->pages[$url]->render();
                 return true;
             }
@@ -50,10 +51,14 @@
 
     class Page
     {
+        public $name = '';
         public $url = '/test';
+        public $query = array();
         public $dir = '';
         public $controller = null;
         public $user = null;
+        public $allowed_user_types = array();
+        public $denied_redirect = '/';
         public $use_standard_head = true;
         public $ajax_events = array();
 
@@ -68,7 +73,10 @@
 
         public function render()
         {
-            $this->render_html();
+            if (!sizeof($this->allowed_user_types) || in_array($this->user->type, $this->allowed_user_types))
+                $this->render_html();
+            else
+                header('Location: '. $this->denied_redirect);
         }
 
         private function render_html()
@@ -93,7 +101,7 @@
 
         private function render_body()
         {
-            echo '<body>';
+            echo '<body class="'. $this->name .'">';
                 if (file_exists($this->dir . '/body.htm'))
                     include($this->dir . '/body.htm');
             echo '</body>';

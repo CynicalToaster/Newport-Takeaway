@@ -1,6 +1,7 @@
 <?
     class Page_Login extends Page
     {
+        public $name = 'login';
         public $url = '/login';
 
         public $ajax_events = array(

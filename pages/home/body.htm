@@ -1,37 +1,95 @@
-<? if (isset($this->user)): ?>
-    <div id="" class="container">
-        <div class="row">
-            <div class="page-container-flex">
-                <div class="page-container">
-                    <h1>Sign In</h1>
-                    <form id="login_form" method="post">
-                        <div class="form-field">
-                            <input name="username" type="text" placeholder="Username">
-                        </div>
-                        <div class="form-field">
-                            <input name="password" type="password" placeholder="Password">
-                        </div>
-                        <button class="btn primary" onClick="login(); return false;">Login</button>
-                    </form>
-                </div>
-            </div>
-            <span class="signiture">Dan Evans</span>
-        </div>
-    </div>
+<div class="container">
+    <div class="row">
 
+        <? if(isset($this->user)): ?>
+            <a class="user" href="/login"><?= $this->user->type == 'admin' ? 'Admin' : 'User' ?>: <?= $this->user->username ?></a>
+        <? else: ?>
+            <a class="user" href="/login">Login</a>
+        <? endif; ?> 
+
+        <div class="floating-container-flex">
+            <div class="floating-container">
+                <h1>Menu</h1>
+                
+                <? if (isset($this->user)): ?>
+                    <div id="item-list">
+                        <? if (isset($_SESSION['order'])): ?>
+                            <?
+                                $order_items = array();
+                                foreach ($_SESSION['order'] as $item_id => $item_count)
+                                    $order_items[] = (new Db_Item())->findById($item_id);    
+
+                                $total_price = 0
+                            ?>
+                            <ul>
+                                <? foreach ($order_items as $item): ?>
+                                    <? $item_count = $_SESSION['order'][$item->id] ?>
+                                    <? $total_price += $item_count * $item->price ?>
+                                    <li><?= $item->name ?> - #<?= $item_count ?> -  &pound;<?= $item_count * $item->price ?></li>
+                                <? endforeach; ?>
+                            </ul>
+                            <p>Total: &pound;<?= $total_price ?></p>
+                            <button onClick="placeOrder(); return false;">Place Order</button>
+                        <? endif; ?>
+                    </div>
+                <? endif; ?>
+
+                <? $categories = (new Db_Category())->findAll(); ?>
+                <ul class="menu-category-list">
+                    <? foreach ($categories as $category): ?>
+                        <? if (sizeof($category->items) > 0): ?>
+                            <li class="menu-category">
+                                <p class="title"><strong><?= $category->name ?></strong></p>
+                                <ul class="category-item-list">
+                                    <? foreach ($category->items as $item): ?>
+                                        <li class="category-item">
+                                            <span class="title"><strong><?= $item->name ?></strong></span>
+
+                                            <? if(isset($this->user)): ?>
+                                                <a class="category-item-edit" href="#" onClick="addItemToOrder(<?= $item->id ?>);">Add</a>
+                                            <? endif; ?>                
+                                            
+                                            <span class="price">&pound;<?= $item->price ?></span><br>
+                                            <span class="description"><?= $item->description ?></span>
+                                        </li>
+                                    <? endforeach; ?>
+                                </ul>
+                            </li>
+                        <? endif; ?>
+                    <? endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    <span class="signiture">Dan Evans</span>
+</div>
+
+
+<? if (isset($this->user)): ?>
     <script>
-        function logout() {
+        function addItemToOrder(id)
+        {
             send_ajax(
-                '', 
-                'logout', 
+                null, 
+                'add_item_to_order', 
                 {
-                    'onSuccess': function(response) {
-                        window.location.href = '/login';
-                    }
+                    'update': $('#item-list'),
+                    'extraData': {
+                        'id': id
+                    },
                 }
-            ); 
+            );
+            event.preventDefault();
+        }
+
+        function placeOrder()
+        {
+            send_ajax(
+                null,
+                'place_order', 
+                {
+                    'update': $('#item-list')
+                }
+            );
         }
     </script>
-<? else: ?>
-    <a href="/login">Login</a>
 <? endif; ?>

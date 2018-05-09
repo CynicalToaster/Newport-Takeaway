@@ -6,8 +6,7 @@ function send_ajax(form, event, parameters)
             parameters['update'].html(this.responseText);
         }
 
-        console.log(this.readyState);
-        if (this.readyState == 4) {
+        if (parameters['onSuccess'] && this.readyState == 4) {
             parameters['onSuccess'](this.responseText);
         }
     };

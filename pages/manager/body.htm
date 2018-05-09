@@ -1,13 +1,25 @@
-<? if (isset($this->user) && $this->user->type == 'admin'): ?>
 
-    <p>Logged in as: <?= $this->user->username ?> - <?= $this->user->type?></p>
-    
+<div class="container">
+    <div class="row">
+        
+        <? if(isset($this->user)): ?>
+            <a class="user" href="/login"><?= $this->user->type == 'admin' ? 'Admin' : 'User' ?>: <?= $this->user->username ?></a>
+        <? else: ?>
+            <a class="user" href="/login">Login</a>
+        <? endif; ?> 
 
-    <a href="/manager/add-item">Add Item</a><br>
-    <a href="/manager/edit-item">Edit Item</a><br>
-    <a href="/manager/remove-item">Remove Item</a>
+        <div class="floating-container-flex">
+            <div class="floating-container">
+                <h1>Manager</h1>
 
+                <div>
+                    <a class="btn primary mb-20" href="/manager/orders">Orders</a>
+                    <a class="btn primary" href="/manager/menu">Menu</a>
+                </div>
 
-<? else: ?>
-    <a href="/login">Login</a>
-<? endif; ?>
+                <div class="login-register">Don't have an account? <a class="signup" href="/register">Sign Up</a></div>
+            </div>
+        </div>
+        <span class="signiture">Dan Evans</span>
+    </div>
+</div>

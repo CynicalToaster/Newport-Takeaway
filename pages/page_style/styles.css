@@ -1,0 +1,79 @@
+/*
+body
+|-> cards
+|   |-> headings
+|   |-> plain text
+|   |-> buttons
+|   \-> inputs
+|-> headings
+|-> plain text
+|-> buttons
+\-> inputs
+*/
+
+body {
+    background-color: #f4f4f4;
+    color: #444;
+    font-family: 'Lato';
+    font-size: 14px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    margin-top: 0;
+}
+p {}
+
+input {}
+
+.btn {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, border 0.3s;
+}
+.btn:hover {
+    background-color: #ddd;
+    border: 1px solid #ddd;
+}
+.btn:active {
+    background-color: #ddd;
+    border: 1px solid #ddd;
+}
+
+.btn.primary {}
+
+.card {
+    background-color: #fff;
+    padding: 20px 20px 10px 20px;
+    margin: 40px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.card > .header {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: -20px -20px 0 -20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.card > .header > h1,
+.card > .header > h2,
+.card > .header > h3,
+.card > .header > h4,
+.card > .header > h5,
+.card > .header > h6 {
+    margin: 0;
+}
+
+.card > .footer {
+    background-color: #f4f4f4;
+    color: #aaa;
+    padding: 10px 20px;
+    margin: 0 -20px -20px -20px;
+    border-top: 1px solid #ddd;
+}

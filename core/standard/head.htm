@@ -1,9 +1,131 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
-<link rel="stylesheet" href="/resources/css/font-awesome.min.css">
+<link rel="stylesheet" href="/resources/css/fontawesome-all.min.css">
+<link rel="stylesheet" href="/resources/css/main.css">
 
 <script src="/resources/js/jquery-3.2.1.min.js"></script>
 <script src="/resources/js/popper.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/angular.min.js"></script>
 <script src="/resources/js/ajax.js"></script>
+
+<style>
+    body {
+        position: relative;
+        min-height: 100vh;
+    }
+
+    .alert {
+        display:flex;
+        flex-wrap: wrap;
+        width: 100%;
+        border: 1px solid #ccc; 
+        border-radius: 2px;
+        box-shadow: 0px 1px 2px rgba(71,73,72,0.2);
+        text-shadow: 0px 0px 2px rgba(255,255,255,0.8);
+        color: #444;
+        background-color: #fff;
+    } 
+    .alert .alert-icon {
+        /* height: 100%; */
+        margin: auto 0px;
+        padding: 5px 0px 5px 5px;
+        font-size: 24px;
+    } 
+    .alert .alert-content {
+        padding: 10px 10px 10px 5px;
+    }
+    .alert .alert-content-thin {
+        padding: 5px 5px 5px 5px;
+    }
+
+    .alert-error {
+        border: 1px solid #d8000c;  
+        color: #d8000c;
+        background-color: #ffbaba;
+    }
+    .alert-error .material-icons {color: #d8000c;}
+
+    .alert-success {
+        border: 1px solid #4f8a10; 
+        color: #4f8a10;
+        background-color: #dff2bf;
+    }
+    .alert-success .material-icons {color: #4f8a10;} 
+
+    .alert-info {
+        border: 1px solid #00529b; 
+        color: #00529b;
+        background-color: #bde5f8;
+    }
+    .alert-info .material-icons {color: #00529b;}
+
+    .alert-warning {
+        border: 1px solid #9f6000; 
+        color: #9f6000;
+        background-color: #feefb3;
+    }
+    .alert-warning .material-icons {color: #9f6000;}
+
+
+    .btn-back {
+        position: absolute;
+        padding: 10px;
+        margin: 20px;
+        left: 0;
+        top: 0;
+        font-size: 22px;
+        color: #aaa;
+    }
+
+    .btn-back:hover {
+        color: #666;
+    }
+
+    .menu-category-list {
+        list-style: none;
+        padding: 0;
+    }
+    .menu-category-list > .menu-category {
+
+    }
+
+    .menu-category > .title {
+        margin: 0;
+        font-size: 22px;
+        padding-bottom: 10px;
+    }
+
+    .category-item-list {
+        list-style: none;
+        padding-left: 0;
+    }
+    .category-item-list > .category-item {
+        padding-bottom: 20px;
+    }
+    .category-item > .title {
+        font-size: 16px;
+    }
+    .category-item .description {
+        font-size: 12px;
+    }
+    .category-item .price {
+        float: right;
+    }
+
+    .category-item-edit {
+        float: right;
+        margin-left: 10px;
+        padding: 0 10px;
+        border: 1px solid #aaa;
+        border-radius: 2px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .category-item-edit:hover {
+        border: 1px solid #666;
+        color: #666;
+    }
+</style>
