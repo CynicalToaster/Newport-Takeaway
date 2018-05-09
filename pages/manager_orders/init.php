@@ -25,6 +25,24 @@
                 echo 'Order was not deleted';
             echo ' at '. date('h:i a m/d/Y', time());
             echo '</div>';
+
+            $orders = (new Db_Order)->findAll();
+            foreach ($orders as $order)
+            {
+                echo '<div class="order">';
+                echo    '<p class="order-header">';
+                echo        '<strong>Order #'. $order->id .'</strong>';
+                echo        '<a class="order-delete" href="#" onclick="deleteOrder('. $order->id .');">Mark as Complete</a>';
+                echo    '</p>';
+                echo    '<ul class="order-items">';
+                            foreach ($order->items as $order_item)
+                                echo '<li>#'. $order_item->count .' '. $order_item->item->name .'</li>';
+                echo    '</ul>';
+                echo '</div>';
+            }
+
+            if (sizeof($orders) == 0)
+                echo '<span>No orders have been created.</span>';
         }
     }
 ?>

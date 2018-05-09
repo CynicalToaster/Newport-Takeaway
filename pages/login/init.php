@@ -13,18 +13,32 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $users = Db_Controller::queryArray('SELECT id, hash FROM users WHERE username = "'. $username .'"');
+            $users = (new Db_User())->findWhere(
+                'WHERE
+                    username = {{username}}
+            ', array(
+                'username' => '\''.$username.'\''
+            ));
 
-            $password_hash = hash('sha256', $username . $password);
-            if(password_verify($password_hash, $users[0]['hash']))
+            if (!sizeof($users))
+                return 0;
+
+            foreach ($users as $user)
             {
+                $password_hash = hash('sha256', $username . $password);
+                if(password_verify($password_hash, $user->hash))
+                {
 
-                $_SESSION['user_id'] = $users[0]['id'];
+                    session_start();
+                    $_SESSION['user_id'] = $user->id;
 
-                return 'Logged in as: '. $username;
+                    return 1;
+                }
+                else
+                return 0;
             }
-            else
-                return 'Username or Password is incorrect.';
+
+            return 0;
         }
     }
 ?>

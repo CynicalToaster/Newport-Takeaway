@@ -12,7 +12,7 @@
                 <h1>Menu</h1>
                 
                 <? if (isset($this->user)): ?>
-                    <div id="item-list">
+                    <div class="item-list mb-40">
                         <? if (isset($_SESSION['order'])): ?>
                             <?
                                 $order_items = array();
@@ -21,43 +21,54 @@
 
                                 $total_price = 0
                             ?>
+                            <p class="title"><strong>Current Order</strong></p>
                             <ul>
                                 <? foreach ($order_items as $item): ?>
                                     <? $item_count = $_SESSION['order'][$item->id] ?>
                                     <? $total_price += $item_count * $item->price ?>
-                                    <li><?= $item->name ?> - #<?= $item_count ?> -  &pound;<?= $item_count * $item->price ?></li>
+                                    <li>
+                                        <span class="title">x<?= $item_count ?> <?= $item->name ?></span>
+                                        <span class="price">&pound;<?= $item_count * $item->price ?></span>
+                                    </li>
                                 <? endforeach; ?>
                             </ul>
-                            <p>Total: &pound;<?= $total_price ?></p>
-                            <button onClick="placeOrder(); return false;">Place Order</button>
+                            <p class="price"><strong>Total: &pound;<?= $total_price ?></strong></p>
+                            <button class="btn primary" onClick="placeOrder();">Place Order</button>
                         <? endif; ?>
                     </div>
                 <? endif; ?>
 
-                <? $categories = (new Db_Category())->findAll(); ?>
-                <ul class="menu-category-list">
-                    <? foreach ($categories as $category): ?>
-                        <? if (sizeof($category->items) > 0): ?>
-                            <li class="menu-category">
-                                <p class="title"><strong><?= $category->name ?></strong></p>
-                                <ul class="category-item-list">
-                                    <? foreach ($category->items as $item): ?>
-                                        <li class="category-item">
-                                            <span class="title"><strong><?= $item->name ?></strong></span>
+                <form id="search" class="menu-search mb-20">
+                    <input name="search" type="text" placeholder="Search"/>
+                    <button class="btn primary" onClick="searchMenu();"><i class="fas fa-search"></i></button>
+                </form>
 
-                                            <? if(isset($this->user)): ?>
-                                                <a class="category-item-edit" href="#" onClick="addItemToOrder(<?= $item->id ?>);">Add</a>
-                                            <? endif; ?>                
-                                            
-                                            <span class="price">&pound;<?= $item->price ?></span><br>
-                                            <span class="description"><?= $item->description ?></span>
-                                        </li>
-                                    <? endforeach; ?>
-                                </ul>
-                            </li>
-                        <? endif; ?>
-                    <? endforeach; ?>
-                </ul>
+                <div class="menu">
+                    <? $categories = (new Db_Category())->findAll(); ?>
+                    <ul class="menu-category-list">
+                        <? foreach ($categories as $category): ?>
+                            <? if (sizeof($category->items) > 0): ?>
+                                <li class="menu-category">
+                                    <p class="title"><strong><?= $category->name ?></strong></p>
+                                    <ul class="category-item-list">
+                                        <? foreach ($category->items as $item): ?>
+                                            <li class="category-item">
+                                                <span class="title"><strong><?= $item->name ?></strong></span>
+
+                                                <? if(isset($this->user)): ?>
+                                                    <a class="category-item-edit" href="#" onClick="addItemToOrder(<?= $item->id ?>);">Add</a>
+                                                <? endif; ?>                
+                                                
+                                                <span class="price">&pound;<?= $item->price ?></span><br>
+                                                <span class="description"><?= $item->description ?></span>
+                                            </li>
+                                        <? endforeach; ?>
+                                    </ul>
+                                </li>
+                            <? endif; ?>
+                        <? endforeach; ?>
+                    </ul>
+                </div>
             </div>
         </div>
     <span class="signiture">Dan Evans</span>
@@ -72,7 +83,7 @@
                 null, 
                 'add_item_to_order', 
                 {
-                    'update': $('#item-list'),
+                    'update': $('.item-list'),
                     'extraData': {
                         'id': id
                     },
@@ -87,9 +98,21 @@
                 null,
                 'place_order', 
                 {
-                    'update': $('#item-list')
+                    'update': $('.item-list')
                 }
             );
+        }
+
+        function searchMenu()
+        {
+            send_ajax(
+                $('#search')[0],
+                'search_menu', 
+                {
+                    'update': $('.menu')
+                }
+            );
+            event.preventDefault();
         }
     </script>
 <? endif; ?>

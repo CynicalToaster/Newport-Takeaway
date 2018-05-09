@@ -19,17 +19,26 @@
                 $item = new Db_Item();
 
             $item->updateFromPost($_POST);            
-            
-            $saved = $item->save();
-            
-            echo '<div class="alert alert-'. ($saved ? 'success' : 'error') .'">';
-            if ($saved)
-                echo 'Item saved';
+            $valid = $item->validate();
+
+            if (!isset($valid))
+            {
+                $saved = $item->save();
+
+                echo '<div class="alert alert-'. ($saved ? 'success' : 'error') .'">';
+                if ($saved)
+                    echo 'Item saved';
+                else
+                    echo 'Item was not saved';
+                echo ' at '. date('h:i a m/d/Y', time());
+                echo '</div>';
+            }
             else
-                echo 'Item was not saved';
-            echo ' at '. date('h:i a m/d/Y', time());
-            echo '</div>';
-            
+            {
+                echo '<div class="alert alert-error">';
+                echo $valid;
+                echo '</div>';
+            }
         }
 
         public function ajax_delete_item()

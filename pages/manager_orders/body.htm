@@ -12,16 +12,13 @@
                 <a class="btn-back" href="/manager"><i class="fas fa-chevron-left"></i></a>
                 <h1>Orders</h1>
 
-                <div id="form-message"></div>
-
-                <div>
+                <div class="order-list">
                     <? $orders = (new Db_Order)->findAll() ?>
                     <? foreach ($orders as $order): ?>
-                        
                         <div class="order">
                             <p class="order-header">
                                 <strong>Order #<?= $order->id ?></strong> 
-                                <a class="order-delete" href="#" onclick="deleteOrder(<?= $order->id ?>);"><i class="fas fa-times"></i></a>
+                                <a class="order-delete" href="#" onclick="deleteOrder(<?= $order->id ?>);">Mark as Complete</a>
                             </p>
                             <ul class="order-items">
                                 <? foreach ($order->items as $order_item): ?>
@@ -29,11 +26,10 @@
                                 <? endforeach; ?>
                             </ul>
                         </div>
-
                     <? endforeach; ?>
 
                     <? if (sizeof($orders) == 0): ?>
-                        <span>No orders has been created.</span>
+                        <span>No orders have been created.</span>
                     <? endif; ?>
                 </div>
             </div>
@@ -51,7 +47,7 @@
             null, 
             'delete_order', 
             {
-                'update': $('#form-message'),
+                'update': $('.order-list'),
                 'extraData': {
                     'id': id
                 },

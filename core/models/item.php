@@ -21,5 +21,29 @@
             $this->defineField('price', 'Price');
             $this->defineRelationField('category', 'Category', 'name');
         }
+
+        public function validate()
+        {
+            $name = $this->name;
+            if ($name == null || $name == '')
+                return 'Please enter an item name.';
+
+            $description = $this->description;
+            if ($description == null || $description == '')
+                return 'Please enter an item description.';
+
+            $description = $this->description;
+            if ($description == null || $description == '')
+                return 'Please enter an item description.';
+
+            $price = $this->price;
+            if ($price == null || $price == '')
+                return 'Please enter an item price.';
+
+            if ($price <= 0 || $price > 99)
+                return 'Please enter a valid price.';
+
+            return null;
+        }
     }
 ?>

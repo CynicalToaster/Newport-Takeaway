@@ -32,7 +32,10 @@
             'login', 
             {
                 'onSuccess': function(response) {
-                    window.location.href = '/';
+                    if (response != '0')
+                        window.location.href = '/';
+                    else
+                        alert('Please enter a valid username and password.');
                 }
             }
         ); 
@@ -40,7 +43,7 @@
 
     function logout() {
         send_ajax(
-            '', 
+            null, 
             'logout', 
             {
                 'onSuccess': function(response) {

@@ -310,6 +310,10 @@
             ));
         }
 
+        public function validate()
+        {
+        }
+
         public function __get($property)
         {
             if (isset($this->relations[$property]))

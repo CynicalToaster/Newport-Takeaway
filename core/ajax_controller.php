@@ -49,9 +49,7 @@
 
         public function ajax_logout()
         {
-            traceLog('Logout');
-            if (isset($_SESSION) && isset($_SESSION['user_id']))
-                $_SESSION['user_id'] = null;
+            $_SESSION = array();
         }
     }
 ?>
