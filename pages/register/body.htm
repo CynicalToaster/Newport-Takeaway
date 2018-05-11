@@ -18,7 +18,10 @@
                             <input name="lastname" type="text" placeholder="Surname">
                         </div>
                         <div class="form-field">
-                            <input name="dob" type="text" placeholder="Date of Birth">
+                            <input name="dob" type="text" placeholder="Date of Birth (dd/mm/yyyy)">
+                        </div>
+                        <div class="form-field">
+                            <input name="postcode" type="text" placeholder="Postcode">
                         </div>
                         <button class="btn primary" onClick="createAccount(); return false;">Create Account</button>
                     </form>
@@ -39,8 +42,10 @@
             'create_account', 
             {
                 'onSuccess': function(response) {
-                    alert(response);
-                    window.location.href = '/login';
+                    if (response == '1')
+                        window.location.href = '/login';
+                    else
+                        alert(response);
                 }
             }
         ); 

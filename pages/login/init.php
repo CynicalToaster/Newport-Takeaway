@@ -21,24 +21,23 @@
             ));
 
             if (!sizeof($users))
-                return 0;
+                return 'Please enter your Username and Password';
 
             foreach ($users as $user)
             {
                 $password_hash = hash('sha256', $username . $password);
                 if(password_verify($password_hash, $user->hash))
                 {
-
-                    session_start();
+                    $_SESSION = array();
                     $_SESSION['user_id'] = $user->id;
 
                     return 1;
                 }
                 else
-                return 0;
+                    return 'Username or Password is incorrect';
             }
 
-            return 0;
+            return 'Please enter your Username and Password';
         }
     }
 ?>

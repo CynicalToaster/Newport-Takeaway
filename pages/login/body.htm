@@ -32,10 +32,10 @@
             'login', 
             {
                 'onSuccess': function(response) {
-                    if (response != '0')
+                    if (response == '1')
                         window.location.href = '/';
                     else
-                        alert('Please enter a valid username and password.');
+                        alert(response);
                 }
             }
         ); 

@@ -30,12 +30,10 @@
             if (!isset($valid))
             {
                 $new_user->save();
-                return 'User created!';
+                return 1;
             }
             else
-            {
-                return 'Please enter';
-            }
+                return $valid;
         }
     }
 ?>

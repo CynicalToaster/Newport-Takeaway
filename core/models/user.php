@@ -23,18 +23,20 @@
 
             $firstname = $this->firstname;
             if ($firstname == null || $firstname == '')
-                return 'Please enter your firstname.';
+                return 'Please enter your forename.';
 
             $lastname = $this->lastname;
             if ($lastname == null || $lastname == '')
-                return 'Please enter your lastname.';
+                return 'Please enter your surname.';
 
             $dob = $this->dob;
             if ($dob == null || $dob == '')
                 return 'Please enter your date of birth.';
 
-            $dob = date_parse($this->dob);
-            traceLog($dob);
+            $dob = new DateTime($this->dob);
+            $today = new DateTime("now");
+            if ($today < $dob || $today->modify('-150 year') > $dob)
+                return 'Please enter a valid date of birth.';
 
             $postcode = $this->postcode;
             if ($postcode == null || $postcode == '')
