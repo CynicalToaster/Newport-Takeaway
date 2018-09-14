@@ -11,16 +11,22 @@
             <div class="floating-container">
                 <h1>Menu</h1>
                 
+                <!-- Check if the user is logged in -->
                 <? if (isset($this->user)): ?>
                     <div class="item-list mb-40">
+                        
+                        <!-- Check if they currently have an order -->
                         <? if (isset($_SESSION['order'])): ?>
                             <?
+                                // Loop through each item in the order.
                                 $order_items = array();
                                 foreach ($_SESSION['order'] as $item_id => $item_count)
                                     $order_items[] = (new Db_Item())->findById($item_id);    
 
                                 $total_price = 0
                             ?>
+
+                            <!-- Render out the current order with each item, its name and price. -->
                             <p class="title"><strong>Current Order</strong></p>
                             <ul>
                                 <? foreach ($order_items as $item): ?>
@@ -32,8 +38,15 @@
                                     </li>
                                 <? endforeach; ?>
                             </ul>
-                            <p class="price"><strong>Total: &pound;<?= $total_price ?></strong></p>
-                            <button class="btn primary" onClick="placeOrder();">Place Order</button>
+
+                            <!-- Render the total price of all the items in the order -->
+                            <p class="price"><strong>Total: &pound;<?= $total_price ?></strong></p><br>
+
+                            <!-- Include a button to place the order as well as clear it. -->
+                            <div style="padding-top: 16px;">
+                                <button style="width:50%" class="btn primary" onClick="placeOrder();">Place Order</button>
+                                <button style="width:49%" class="btn primary" onClick="clearOrder();">Clear Order</button>
+                            </div>
                         <? endif; ?>
                     </div>
                 <? endif; ?>
@@ -43,18 +56,28 @@
                     <button class="btn primary" onClick="searchMenu();"><i class="fas fa-search"></i></button>
                 </form>
 
+                <!-- Container with the "menu" class, this will allow the menu to be updated when searching is implemented. -->
                 <div class="menu">
+
+                    <!-- Get a list of all the categories in the system. -->
                     <? $categories = (new Db_Category())->findAll(); ?>
                     <ul class="menu-category-list">
+
+                        <!-- Loop through each category. -->
                         <? foreach ($categories as $category): ?>
+
+                            <!-- If the category has 1 or more items in it then list the items. -->
                             <? if (sizeof($category->items) > 0): ?>
                                 <li class="menu-category">
                                     <p class="title"><strong><?= $category->name ?></strong></p>
                                     <ul class="category-item-list">
+
+                                        <!-- Loop through each item in the category. -->
                                         <? foreach ($category->items as $item): ?>
                                             <li class="category-item">
                                                 <span class="title"><strong><?= $item->name ?></strong></span>
 
+                                                <!-- If the user is currently logged in then display the add to order button. -->
                                                 <? if(isset($this->user)): ?>
                                                     <a class="category-item-edit" href="#" onClick="addItemToOrder(<?= $item->id ?>);">Add</a>
                                                 <? endif; ?>                
@@ -103,7 +126,24 @@
             );
         }
 
-        function searchMenu()
+        function clearOrder()
+        {
+            send_ajax(
+                null,
+                'clear_order', 
+                {
+                    'onSuccess': function()
+                    {
+                        window.location.href = '/';
+                    }
+                }
+            );
+        }
+    </script>
+<? endif; ?>
+
+<script>
+    function searchMenu()
         {
             send_ajax(
                 $('#search')[0],
@@ -114,5 +154,4 @@
             );
             event.preventDefault();
         }
-    </script>
-<? endif; ?>
+</script>

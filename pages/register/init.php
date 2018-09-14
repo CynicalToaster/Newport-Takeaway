@@ -12,6 +12,12 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
+            if ($password == null || $password == '')
+                return 'Please enter a Username and Password';
+
+            if (strlen($password) < 8)
+                return 'Please enter a secure password. (8 or more characters)';
+
             $current_users = Db_Controller::queryArray('SELECT username FROM users');
             foreach ($current_users as $user) {
                 if ($user['username'] == $username)

@@ -17,7 +17,11 @@
         <div class="floating-container-flex">
             <div class="floating-container">
                 <a class="btn-back" href="/manager/menu"><i class="fas fa-chevron-left"></i></a>
-                <h1>Edit - <?= $menu_item->name ?></h1>
+                <? if ($menu_item->id != 0) :?>
+                    <h1>Edit - <?= $menu_item->name ?></h1>
+                <? else: ?>
+                    <h1>Create</h1>
+                <? endif; ?>
 
                 <div id="form-message"></div>
 
@@ -26,8 +30,11 @@
                 </form>
 
                 <button class="btn primary mb-20" onClick="item_save(); return false;">Save</button>
-                <button class="btn primary" onClick="item_delete(); return false;">Delete</button>
 
+                <? if ($menu_item->id != 0) :?>
+                    <button class="btn primary" onClick="item_delete(); return false;">Delete</button>
+                <? endif; ?>
+                
                 <div class="login-register">Don't have an account? <a class="signup" href="/register">Sign Up</a></div>
             </div>
         </div>

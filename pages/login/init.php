@@ -1,9 +1,11 @@
 <?
     class Page_Login extends Page
     {
+        // The url of the page.
         public $name = 'login';
         public $url = '/login';
 
+        // All AJAX handlers that the page needs.
         public $ajax_events = array(
             'login'
         );
@@ -12,6 +14,10 @@
         {
             $username = $_POST['username'];
             $password = $_POST['password'];
+
+            traceLog(strlen($password));
+            if (strlen($password) < 8)
+                return 'Please enter a secure password. (8 or more characters)';
 
             $users = (new Db_User())->findWhere(
                 'WHERE
